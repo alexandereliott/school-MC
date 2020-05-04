@@ -1,0 +1,56 @@
+#!/bin/bash
+
+clear
+i="y"
+echo "Enter name of database "
+read SRecords
+while [ $i = "y" ]
+do
+clear
+echo "1. Add a Record to the database file. "
+echo "2. Delete a Record from the database file. "
+echo "3. Update a Record in the database file. "
+echo "4. Search for a Record from the database file. "
+echo "5. Exit. "
+echo "Enter your choice "
+read ch
+    case $ch in
+	    1)echo "Enter Student ID "
+		    read SID
+	       echo "Enter First and Last Name "
+	       read FLname
+	      echo "Enter Phone Number "
+	      read PN
+	      echo "Enter Email "
+	      read Email
+	      if grep -qF "$SID" "$FLname" "$PN" "$Email" SRecords ; then
+		      echo "This Record already exists in our system."
+	      else 
+	       echo "$SID	$FLname		$PN	$Email" >> $SRecords	      
+	      fi
+      
+	   2)echo "Enter The Student ID "  
+	   read id
+	   sed 's/$id//g' $SRecords
+	   echo "Record is deleted "
+	   3)echo "What would you like to update? use student Id "
+		echo "what do you want to replace?"
+		read var1
+		echo "what do you want to replace with it?"
+		read var2
+		sed -i 's/$var1/var2/g' $SRecords
+
+	  
+	   4)echo "Enter the student's ID "
+	   	 read id
+		 grep -i "$id" $SRecords
+
+	   5)exit		      
+    esac
+echo "Do u want to continue ?"
+read i
+if [ $i != "y" ]
+then
+    exit
+fi
+done         
